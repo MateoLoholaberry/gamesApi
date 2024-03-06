@@ -9,8 +9,7 @@ namespace GameStoreApi.Dtos
         public string Name { get; set; }
 
         [Required]
-        [StringLength(50)]
-        public string Genre { get; set; }
+        public int GenreId { get; set; }
 
         [Range(1, 200)]
         public decimal Price { get; set; }
