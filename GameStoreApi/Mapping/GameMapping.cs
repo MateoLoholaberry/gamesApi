@@ -44,6 +44,7 @@ namespace GameStoreApi.Mapping
 
         public static GameDetailsDto ToGameDetailsDto(this Game game)
         {
+
             return new GameDetailsDto()
             {
                 Id = game.Id,
@@ -51,6 +52,7 @@ namespace GameStoreApi.Mapping
                 Price = game.Price,
                 ReleaseDate = game.ReleaseDate,
                 Name = game.Name,
+                Users = game.Users.ToListUserDto(),
             };
         }
 

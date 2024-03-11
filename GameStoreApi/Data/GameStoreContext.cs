@@ -9,6 +9,8 @@ namespace GameStoreApi.Data
 
         public DbSet<Genre> Genres => Set<Genre>();
 
+        public DbSet<User> Users => Set<User>();
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -16,7 +18,7 @@ namespace GameStoreApi.Data
                 new Genre {Id = 1, Name="Fighting"},
                 new Genre {Id = 2, Name="Roleplaying"},
                 new Genre {Id = 3, Name="Sport"},
-                new Genre {Id = 4, Name="Fighting"},
+                new Genre {Id = 4, Name="Racing"},
                 new Genre {Id = 5, Name="Kids & Family"}
             ]);
 

@@ -13,5 +13,7 @@
         public decimal Price { get; set; }
 
         public DateOnly ReleaseDate { get; set; }
+
+        public List<User>? Users { get; set; }
     }
 }

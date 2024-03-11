@@ -7,5 +7,6 @@
         public int Genre { get; set; }
         public decimal Price { get; set; }
         public DateOnly ReleaseDate { get; set; }
+        public List<UserDto>? Users { get; set; }
     }
 }

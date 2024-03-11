@@ -24,17 +24,19 @@ namespace GameStoreApi.Endpoints
                                      .AsNoTracking().ToListAsync();
 
                 return Results.Ok(games);
-            });
+            }).RequireAuthorization();
 
 
             // GET /games/1
             group.MapGet("/{id}", async (int id, GameStoreContext dbContext) =>
             {
-                var game = await dbContext.Games.FindAsync(id);
+                var game = await dbContext.Games
+                                          .Include(game => game.Users)
+                                          .FirstOrDefaultAsync(game => game.Id == id);
 
                 return game is null ? Results.NotFound() : Results.Ok(game.ToGameDetailsDto());
 
-            }).WithName("GetGame");
+            }).WithName("GetGame").RequireAuthorization("Admin");
 
 
             // POST /games
@@ -46,7 +48,7 @@ namespace GameStoreApi.Endpoints
                 await dbContext.SaveChangesAsync();
 
                 return Results.CreatedAtRoute("GetGame", new { id = game.Id }, game.ToGameDetailsDto());
-            });
+            }).RequireAuthorization("Admin");
 
 
             // PUT /games
@@ -65,7 +67,7 @@ namespace GameStoreApi.Endpoints
                 await dbContext.SaveChangesAsync();
 
                 return Results.NoContent();
-            });
+            }).RequireAuthorization("Admin");
 
 
             // DELETE /games
@@ -76,7 +78,7 @@ namespace GameStoreApi.Endpoints
                          .ExecuteDeleteAsync();
 
                 return Results.NoContent();
-            });
+            }).RequireAuthorization("Admin");
 
             return group;
         }

@@ -3,6 +3,7 @@ using System;
 using GameStoreApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameStoreApi.Data.Migrations
 {
     [DbContext(typeof(GameStoreContext))]
-    partial class GameStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20240310132542_adding_user_table")]
+    partial class adding_user_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.2");
@@ -85,40 +88,6 @@ namespace GameStoreApi.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("GameStoreApi.Entities.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("GameUser", b =>
-                {
-                    b.Property<int>("GamesId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("UsersId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("GamesId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("GameUser");
-                });
-
             modelBuilder.Entity("GameStoreApi.Entities.Game", b =>
                 {
                     b.HasOne("GameStoreApi.Entities.Genre", "Genre")
@@ -128,21 +97,6 @@ namespace GameStoreApi.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Genre");
-                });
-
-            modelBuilder.Entity("GameUser", b =>
-                {
-                    b.HasOne("GameStoreApi.Entities.Game", null)
-                        .WithMany()
-                        .HasForeignKey("GamesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GameStoreApi.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
